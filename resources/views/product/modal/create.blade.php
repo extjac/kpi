@@ -1,0 +1,63 @@
+<!-- Modal -->
+<div class="modal fade" id="modal-{{$uri}}" tabindex="-1" role="dialog" aria-labelledby="modal-{{$uri}}">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+
+<form class="form form-horizontal ajax-form-{{$uri}}" role="form" method="POST" action="/{{$uri}}">
+<input type="hidden" name="_method" id="_method" value="POST">
+<input type="hidden" name="id" id="id" value="">
+
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" >{{$uri}}</h4>
+	</div>
+
+	<div class="modal-body">
+
+		<div class="form-group">
+			<label class="col-md-2 control-label">Name</label>
+			<div class="col-md-9">
+				<input type="text" class="form-control" name="name" id="name" value="" required>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2 control-label">Category</label>
+			<div class="col-md-6">
+			<?php $categories = App\Category::where('active',1)->get(['id', 'name']) ?>
+				<select class="form-control" name="category_id" id="category_id" required>
+				<option value="">-select-</option>
+				@foreach( $categories as $category )
+				<option value="{{ $category->id }}">{{ $category->name }} </option>
+				@endforeach
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-2 control-label">Active</label>
+			<div class="col-md-3">
+				<select class="form-control" name="active" id="active">
+				<option value="1">Active</option>
+				<option value="0">Inactive</option>
+				</select>
+			</div>
+		</div>
+
+		<span class="showError"></span>
+
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-close"></i> Close </button>
+		<button type="submit" class="btn btn-success btn-sm" data-loading-text="Please wait..."><i class="fa fa-check"></i> Save </button>
+	</div>
+		
+
+</form>
+
+</div>
+</div>
+</div>
+<!-- end Modal -->
+             
