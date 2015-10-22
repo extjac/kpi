@@ -18,6 +18,13 @@ Route::get('/', function () {
     return view('home');
 });
 
+
+
+ Route::get('/weather', function () {
+    return 'https://host/weather/v1/current/{location}';
+});
+
+
 /** 
 * patterns
 */
@@ -82,7 +89,7 @@ Route::group( ['middleware' => 'auth'] , function ()
 	Route::get('/user/create', 'UserController@create');
 	Route::get('/user/{id}/{name}', 'UserController@show');	
 	//ajax
-	Route::get('/api/v1/user', 'UserController@indexAjax' );
+	Route::get('/api/v1/user', 'UserController@index' );
 	Route::post('/api/v1/user', 'UserController@store');
 	Route::put('/api/v1/user/{id}', 'UserController@update');
 	Route::delete('/api/v1/user/{id}', 'UserController@destroy');

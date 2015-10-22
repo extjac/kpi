@@ -1,71 +1,60 @@
 @extends('layout.default')
-
 @section('content')
-
- <div class="row">
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			
-			<div class="panel-heading"><a href="/">Home</a> > <a href="/user">User</a>
-				<div class="pull-right">
-        		<p><a href="javascript:;" data-modal-name="createUser" data-toggle="modal" data-target="#userModal" ><span class="glyphicon  glyphicon-plus" ></span> Add</a></p>
-    			</div>
-    		</div>
-
-			<div class="panel-body">
-				@include('backend.user.table.list')
-			</div>
-
-		</div>
+<div class="row" style="margin-bottom:20px">
+	<div class="col-md-6">
+		<h2>{{$uri}}</h2>
+	</div>
+	<div class="col-md-6">
+		<button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#modal-{{$uri}}" ><i class="fa fa-plus"></i> Add New </a>
 	</div>
 </div>
- 
-
-@include('user.modal.create')
-
+<div class="row">
+	<div class="col-md-12" >
+		@include( $uri.'.table.list' )
+	</div>
+</div>
+@include( $uri.'.modal.create' )
 @endsection
-
-
 @section('PageScripts')
 <script>
- var table = $('#tableUser').dataTable( 
+var table = $('#table').dataTable( 
 {
-	"ajax"          : api+"/user",
-	"columns"       : [
-	  	{ data: null , render: function ( data ) 
-	  	   	{
-	    		return'<input type="checkbox" name="id[]" id="id[]" value="'+data.id+'"  />';                        
-	       	}  
-	  	},
-		{ data: "first_name"},
-		{ data: "email"},
-		{ data: "email"},
-		{ data: "active"},
-	    { data: null , render: function ( data ) 
-	        {
-		      return ' <a href="/user/'+data.id+'"'
-		      		+' onClick="" class="btn btn-info btn-xs" >'
-		      		+' <span class="glyphicon glyphicon-eye-open"></span> </a>';
-	    	}  
-	  	},
-	  	{ data: null , render: function ( data ) 
-	    	{
-	      		return '<a href="javascript:;"'
-	      			+' class="btn btn-danger remove-id btn-xs" '
-	      			+' data-id="'+data.id+'" '
-	      			+' data-url="/user/'+data.id+'" '
-	      			+' data-method="DELETE" '
-	      			+' data-confirm="Are you sure?">'
-	      			+' <span class="glyphicon glyphicon-trash"></span> '
-	      		 +'</a>';
-	    	}  
-	  	}
-	]             
+  	"order" 		: [[ 0, "asc" ]], 
+  	"lengthMenu"    : [ [ 50, 100, -1], [  50, 100, "All"] ],
+  	"pageLength"    : 100,
+  	"iDisplayLength": 100,
+  	"paging"        : true,
+  	"ordering"      : true,
+  	"info"          : true,
+  	"pagingType"    : "full_numbers",  
+  	"deferRender"   : true,
+	"ajax"          : api+"/{{$uri}}",
+	"columns"       : [	              	
+
+					{ data: "id"}, 
+	    	        { data: null , render: function ( data ) 
+	        	        {
+	            	      return data.first_name+' '+data.last_name;
+	                	}  
+	              	},
+	    	        { data: null , render: function ( data ) 
+	        	        {
+	            	      return data.active==1 ? 'Active' : 'Inactive' ;
+	                	}  
+	              	},
+	    	        { data: null , render: function ( data ) 
+	        	        {
+	            	      return '<button type="button" '
+	            	      		+'class="btn btn-default btn-xs edit-{{$uri}}-id" '
+	            	      		+'data-url="/{{$uri}}/'+data.id+'" >'
+	            	      		+'<i class="fa fa-pencil-square-o"></i> edit</button> '
+	            	      		+'<button type="button" '
+	            	      		+'class="btn btn-danger btn-xs remove-{{$uri}}-id" '
+	            	      		+'data-url="/{{$uri}}/'+data.id+'" >'
+	            	      		+'<i class="fa fa-trash"></i> remove</button> ';
+	                	}  
+	              	}	              	
+	          ]             
 });
- /*
-new $.fn.dataTable.FixedHeader( table, {
-    // options
-} );
-*/
 </script>
 @endsection

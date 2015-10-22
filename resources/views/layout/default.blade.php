@@ -156,6 +156,7 @@
 <script src="{{ asset('assets/js/product.js') }}"></script>
 <script src="{{ asset('assets/js/category.js') }}"></script>
 <script src="{{ asset('assets/js/kpi.js') }}"></script>
+<script src="{{ asset('assets/js/user.js') }}"></script>
 <!-- Page Scripts -->
 @yield('PageScripts')
 <!-- / End Page Scripts -->

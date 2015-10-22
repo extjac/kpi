@@ -1,13 +1,10 @@
-<table id="tableUser" class="table table-striped table-bordered table-hover"  >
+<table id="table" class="table table-striped table-bordered table-hover "   >
 	<thead>
 		<tr>
-			<th></th>
+			<th>ID</th>
 			<th>Name</th>
-			<th>Location</th>
-			<th>Email</th>
 			<th>Status</th>
-			<th></th>
-			<th></th>
+			<th>Actions</th>
 		</tr>
 	</thead>		            
 </table>
